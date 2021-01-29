@@ -3,20 +3,24 @@
 <ng-template #isLoaded>
   <div *ngFor="let todo of todosDone$ | async" >
     <mat-checkbox
+    class="margin-left"
     [checked]="todo.isDone"
     (click)="OnTodoToggle(todo)">
-      <p [ngClass]="{'strike': todo.isDone}">
-        {{ todo.id }} - {{ todo.title }} : {{ todo.isDone }}
-      </p>
+      <span [ngClass]="{'strike': todo.isDone}">
+        {{ todo.id }} - {{ todo.title }}
+      </span>
     </mat-checkbox>
+    <button mat-raised-button color="primary" class="margin-left" (click)="OnClickDetails($event, todo.id)">Details</button>
   </div>
   <div *ngFor="let todo of todosUndone$ | async" >
     <mat-checkbox
+    class="margin-left"
     [checked]="todo.isDone"
     (click)="OnTodoToggle(todo)">
-      <p [ngClass]="{'strike': todo.isDone}">
-        {{ todo.id }} - {{ todo.title }} : {{ todo.isDone }}
-      </p>
+      <span [ngClass]="{'strike': todo.isDone}">
+        {{ todo.id }} - {{ todo.title }}     
+      </span>
     </mat-checkbox>
+    <button mat-raised-button color="primary" class="margin-left" (click)="OnClickDetails($event, todo.id)">Details</button>
   </div>
 </ng-template>

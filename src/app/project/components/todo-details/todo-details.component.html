@@ -1,0 +1,8 @@
+<div *ngIf="todo$ | async; let todo" class="margin-left">
+    <h4>--- Todo Details ---</h4>
+    <h3>{{ todo?.title }}</h3>
+    <p>Status : {{ todo.isDone ? 'Done' : 'Todo' }}</p>
+    <p>Description : {{ todo.description }}</p>
+</div>
+<br>
+<a mat-raised-button color="primary" class="margin-left" [routerLink]="['/todos']">Retour</a>

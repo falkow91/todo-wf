@@ -15,12 +15,14 @@ import * as TodoReducer from './project/store/todo.reducers';
 import { TodoViewComponent } from './project/components/todo-view/todo-view.component'
 import { SharedModule } from './project/shared.module';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { TodoDetailsComponent } from './project/components/todo-details/todo-details.component';
 
   
 @NgModule({
   declarations: [
     AppComponent,
     TodoViewComponent,
+    TodoDetailsComponent,
   ],
   imports: [
     BrowserModule,

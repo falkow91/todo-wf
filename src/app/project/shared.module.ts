@@ -4,6 +4,7 @@ import { MatCheckboxModule } from '@angular/material/checkbox';
 const MATERIAL_MODULES = [
 
   MatCheckboxModule,
+
 ];
 
 @NgModule({

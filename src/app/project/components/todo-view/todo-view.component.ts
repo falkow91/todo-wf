@@ -5,6 +5,7 @@ import { Store } from '@ngrx/store/';
 import * as TodoActions from '../../store/todo.actions';
 import { IState as TodoState, selectAllTodos, selectDoneTodoList, selectUndoneTodoList } from '../../store/todo.reducers';
 import { Observable } from 'rxjs';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-todo-view',
@@ -17,8 +18,9 @@ export class TodoViewComponent implements OnInit {
   public todosDone$: Observable<Todo[]> = this.store.select(state => selectDoneTodoList(state.todo));
   public todosUndone$: Observable<Todo[]> = this.store.select(state => selectUndoneTodoList(state.todo));
 
-  constructor(private todoService: TodoService,
+  constructor(
     private store: Store<{ todo: TodoState }>,
+    private router: Router,
     ) { }
 
   ngOnInit(): void {
@@ -35,6 +37,11 @@ export class TodoViewComponent implements OnInit {
         todo,
       }),
     );
+  }
+
+  public OnClickDetails(event: Event, todoId: number) {
+    event.stopPropagation();
+    this.router.navigate(['todos', todoId, 'details']);
   }
 
 }
