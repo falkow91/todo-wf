@@ -1,0 +1,20 @@
+<form [formGroup]="TodoForm" (ngSubmit)="OnSubmit()">
+   <h1> --- Create Todo --- </h1>
+    <div class="margin-left">
+      <mat-label>Titre</mat-label>
+      <br>
+      <input matInput formControlName="title" required />
+      <br>
+      <mat-error *ngIf="TodoForm.controls['title'].invalid">
+          Titre absent !
+      </mat-error>
+      <br><br>
+      <mat-label>Déscription</mat-label>
+      <br>
+      <textarea rows="3" matInput formControlName="description"></textarea>
+    </div>
+    <br>
+    <a mat-raised-button color="primary" class="margin-left" [routerLink]="['/todos']">Retour</a>
+    <button mat-stroked-button color="primary" class="margin-left" [disabled]="TodoForm.invalid" type="submit">Créer</button>
+</form>
+  

@@ -31,7 +31,7 @@ export class TodoService implements ITodoService {
   }
  
   addTodo(title: string): Observable<Todo> {
-    const todo = { title: title, isDone: false };
+    const todo = { title: title, isDone: false, isNew: true};
     return this.http.post<Todo>(TodoService.todosUrl, todo, cudOptions).pipe(
       catchError(this.handleError)
     );

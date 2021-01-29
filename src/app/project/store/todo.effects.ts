@@ -35,4 +35,15 @@ export class TodoEffects {
             catchError(() => of(TodoActions.updateFail()))
             ))
         ));
+
+    
+    createTodo$: Observable<Action> = createEffect(() =>
+        this.actions$.pipe(
+        ofType(TodoActions.create),
+        mergeMap((action) => this.todoService.addTodo(action.todo.title)
+            .pipe(
+            map(todo => TodoActions.created({ todo })),
+            catchError(() => of(TodoActions.createFail()))
+            ))
+        ));
 }

@@ -3,4 +3,5 @@ export class Todo {
     public title: string = '';
     public description: string = '';
     public isDone: boolean = false;
+    public isNew: boolean = true;
 }

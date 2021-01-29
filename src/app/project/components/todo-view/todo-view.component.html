@@ -1,6 +1,17 @@
 <h1> ----- Todo list ----- </h1>
 <mat-spinner *ngIf="IsFetching | async; else isLoaded"></mat-spinner>
 <ng-template #isLoaded>
+  <div *ngFor="let todo of todosNew$ | async" >
+    <mat-checkbox
+    class="margin-left"
+    [checked]="todo.isDone"
+    (click)="OnTodoToggle(todo)">
+      <span [ngClass]="{'strike': todo.isDone}">
+        {{ todo.id }} - {{ todo.title }}
+      </span>
+    </mat-checkbox>
+    <button mat-raised-button color="primary" class="margin-left" (click)="OnClickDetails($event, todo.id)">Details</button>
+  </div>
   <div *ngFor="let todo of todosDone$ | async" >
     <mat-checkbox
     class="margin-left"
@@ -23,4 +34,6 @@
     </mat-checkbox>
     <button mat-raised-button color="primary" class="margin-left" (click)="OnClickDetails($event, todo.id)">Details</button>
   </div>
+  <br><br>
+  <a mat-raised-button color="primary" class="margin-left" [routerLink]="['/todos/create']">Nouveau Todo</a>
 </ng-template>

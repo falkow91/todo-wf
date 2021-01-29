@@ -1,9 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { Todo } from '../../todo';
-import { TodoService } from '../../services/todo.service';
 import { Store } from '@ngrx/store/';
 import * as TodoActions from '../../store/todo.actions';
-import { IState as TodoState, selectAllTodos, selectDoneTodoList, selectUndoneTodoList } from '../../store/todo.reducers';
+import { IState as TodoState, selectAllTodos, selectDoneTodoList, selectNewTodo, selectUndoneTodoList } from '../../store/todo.reducers';
 import { Observable } from 'rxjs';
 import { Router } from '@angular/router';
 
@@ -17,6 +16,7 @@ export class TodoViewComponent implements OnInit {
   public IsFetching: Observable<boolean> = this.store.select(state => state.todo.isFetching);
   public todosDone$: Observable<Todo[]> = this.store.select(state => selectDoneTodoList(state.todo));
   public todosUndone$: Observable<Todo[]> = this.store.select(state => selectUndoneTodoList(state.todo));
+  public todosNew$: Observable<Todo[]> = this.store.select(state => selectNewTodo(state.todo));
 
   constructor(
     private store: Store<{ todo: TodoState }>,
@@ -31,6 +31,7 @@ export class TodoViewComponent implements OnInit {
     // todo2 read-only error ???
     var todo = {...todo2};
     todo.isDone = !todo.isDone;
+    todo.isNew = false;
     this.store.dispatch(
       TodoActions.update({
         id: todo.id,

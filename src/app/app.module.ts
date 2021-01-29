@@ -16,6 +16,8 @@ import { TodoViewComponent } from './project/components/todo-view/todo-view.comp
 import { SharedModule } from './project/shared.module';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { TodoDetailsComponent } from './project/components/todo-details/todo-details.component';
+import { TodoCreateComponent } from './project/components/todo-create/todo-create.component';
+import { ReactiveFormsModule } from '@angular/forms';
 
   
 @NgModule({
@@ -23,10 +25,12 @@ import { TodoDetailsComponent } from './project/components/todo-details/todo-det
     AppComponent,
     TodoViewComponent,
     TodoDetailsComponent,
+    TodoCreateComponent,
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
+    ReactiveFormsModule,
     SharedModule,
     HttpClientModule,
     HttpClientInMemoryWebApiModule.forRoot(TodoInMemDataService),
@@ -34,7 +38,6 @@ import { TodoDetailsComponent } from './project/components/todo-details/todo-det
     EffectsModule.forRoot([TodoEffects]),
     StoreDevtoolsModule.instrument({ maxAge: 25, logOnly: environment.production }),
     BrowserAnimationsModule,
-
   ],
   providers: [],
   bootstrap: [AppComponent]
