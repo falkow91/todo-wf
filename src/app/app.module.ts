@@ -3,14 +3,21 @@ import { NgModule } from '@angular/core';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-
+import { TodoModule } from './project/todo.module';
+import { InMemoryWebApiModule } from 'angular-in-memory-web-api';  
+import { TodoInMemDataService } from './project/services/todo-in-mem-data.service';
+import { HttpClientModule } from '@angular/common/http';
+  
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
   ],
   imports: [
     BrowserModule,
-    AppRoutingModule
+    AppRoutingModule,
+    TodoModule,
+    HttpClientModule,
+    InMemoryWebApiModule.forRoot(TodoInMemDataService),
   ],
   providers: [],
   bootstrap: [AppComponent]
