@@ -7,7 +7,6 @@ export interface ITodoService {
   getTodo(id: number): Observable<Todo>;
   addTodo(title: string): Observable<Todo>;
   deleteTodo(todo: Todo | number): Observable<Todo>;
-  searchTodo(term: string): Observable<Todo[]>;
   updateTodo(todo: Todo): Observable<Todo>;
  
 }

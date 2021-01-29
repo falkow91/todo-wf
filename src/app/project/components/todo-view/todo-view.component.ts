@@ -1,6 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { Todo } from '../../todo';
 import { TodoService } from '../../services/todo.service';
+import { Store } from '@ngrx/store/';
+import * as TodoActions from '../../store/todo.actions';
+import { IState as TodoState, selectAllTodos, selectDoneTodoList, selectUndoneTodoList } from '../../store/todo.reducers';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-todo-view',
@@ -9,14 +13,28 @@ import { TodoService } from '../../services/todo.service';
 })
 export class TodoViewComponent implements OnInit {
 
-  todos: Todo[] = [];
+  public IsFetching: Observable<boolean> = this.store.select(state => state.todo.isFetching);
+  public todosDone$: Observable<Todo[]> = this.store.select(state => selectDoneTodoList(state.todo));
+  public todosUndone$: Observable<Todo[]> = this.store.select(state => selectUndoneTodoList(state.todo));
 
-  constructor(private todoService: TodoService) { }
+  constructor(private todoService: TodoService,
+    private store: Store<{ todo: TodoState }>,
+    ) { }
 
   ngOnInit(): void {
-    this.todoService.getTodos().subscribe((todos : Todo[])=>{
-        console.log(todos);
-        this.todos = todos;
-    })
+    this.store.dispatch(TodoActions.fetch());
   }
+
+  public OnTodoToggle(todo2: Todo) {
+    // todo2 read-only error ???
+    var todo = {...todo2};
+    todo.isDone = !todo.isDone;
+    this.store.dispatch(
+      TodoActions.update({
+        id: todo.id,
+        todo,
+      }),
+    );
+  }
+
 }

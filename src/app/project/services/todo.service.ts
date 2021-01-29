@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Observable, throwError } from 'rxjs';
-import { catchError } from 'rxjs/operators';
+import { catchError, map } from 'rxjs/operators';
 import { ITodoService } from './itodo.service';
 import { Todo } from '../todo';
  
@@ -15,7 +15,7 @@ export class TodoService implements ITodoService {
   private static readonly todosUrl = '/api/todos';
   constructor(private http: HttpClient) {
    }
- 
+
   getTodos(): Observable<Todo[]> {
     return this.http.get<Todo[]>(TodoService.todosUrl).pipe(
       catchError(this.handleError)
@@ -31,9 +31,7 @@ export class TodoService implements ITodoService {
   }
  
   addTodo(title: string): Observable<Todo> {
-    // Increment ID
     const todo = { title: title, isDone: false };
-
     return this.http.post<Todo>(TodoService.todosUrl, todo, cudOptions).pipe(
       catchError(this.handleError)
     );
@@ -48,26 +46,17 @@ export class TodoService implements ITodoService {
     );
   }
  
-  searchTodo(term: string): Observable<Todo[]> {
-    term = term.trim();
-    // add safe, encoded search parameter if term is present
-    const options = term ?
-    { params: new HttpParams().set('title', term)} : {};
- 
-    return this.http.get<Todo[]>(TodoService.todosUrl, options).pipe(
-      catchError(this.handleError)
-    );
-  }
- 
   updateTodo(todo: Todo): Observable<Todo> {
     return this.http.put<Todo>(TodoService.todosUrl, todo, cudOptions).pipe(
+      map(() => todo),
       catchError(this.handleError)
     );
   }
+
    
   private handleError(error: any) {
     console.error(error);
     return throwError(error);    
   }
- 
+
 }

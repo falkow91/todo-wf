@@ -3,21 +3,36 @@ import { NgModule } from '@angular/core';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { TodoModule } from './project/todo.module';
-import { InMemoryWebApiModule } from 'angular-in-memory-web-api';  
+import { HttpClientInMemoryWebApiModule } from 'angular-in-memory-web-api';  
 import { TodoInMemDataService } from './project/services/todo-in-mem-data.service';
 import { HttpClientModule } from '@angular/common/http';
+import { EffectsModule } from '@ngrx/effects';
+import { StoreModule } from '@ngrx/store';
+import { environment } from 'src/environments/environment';
+import { StoreDevtoolsModule } from '@ngrx/store-devtools';
+import { TodoEffects } from './project/store/todo.effects';
+import * as TodoReducer from './project/store/todo.reducers';
+import { TodoViewComponent } from './project/components/todo-view/todo-view.component'
+import { SharedModule } from './project/shared.module';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+
   
 @NgModule({
   declarations: [
     AppComponent,
+    TodoViewComponent,
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
-    TodoModule,
+    SharedModule,
     HttpClientModule,
-    InMemoryWebApiModule.forRoot(TodoInMemDataService),
+    HttpClientInMemoryWebApiModule.forRoot(TodoInMemDataService),
+    StoreModule.forRoot({ todo: TodoReducer.reducer }),
+    EffectsModule.forRoot([TodoEffects]),
+    StoreDevtoolsModule.instrument({ maxAge: 25, logOnly: environment.production }),
+    BrowserAnimationsModule,
+
   ],
   providers: [],
   bootstrap: [AppComponent]

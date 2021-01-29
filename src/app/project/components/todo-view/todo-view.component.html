@@ -1,4 +1,22 @@
 <h1> ----- Todo list ----- </h1>
-  <div *ngFor="let todo of todos" >
-    <p>{{ todo.title }} : {{ todo.isDone }}</p>
+<mat-spinner *ngIf="IsFetching | async; else isLoaded"></mat-spinner>
+<ng-template #isLoaded>
+  <div *ngFor="let todo of todosDone$ | async" >
+    <mat-checkbox
+    [checked]="todo.isDone"
+    (click)="OnTodoToggle(todo)">
+      <p [ngClass]="{'strike': todo.isDone}">
+        {{ todo.id }} - {{ todo.title }} : {{ todo.isDone }}
+      </p>
+    </mat-checkbox>
   </div>
+  <div *ngFor="let todo of todosUndone$ | async" >
+    <mat-checkbox
+    [checked]="todo.isDone"
+    (click)="OnTodoToggle(todo)">
+      <p [ngClass]="{'strike': todo.isDone}">
+        {{ todo.id }} - {{ todo.title }} : {{ todo.isDone }}
+      </p>
+    </mat-checkbox>
+  </div>
+</ng-template>
